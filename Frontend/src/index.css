@@ -1,0 +1,93 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.notes {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+}
+
+.note {
+  background-color: aquamarine;
+  min-height: 160px;
+
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.note-date {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.note-date small {
+  font-size: 0.7rem;
+  font-weight: 600;
+  word-spacing: -1px;
+}
+
+.note-date .notes-icons i {
+  cursor: pointer;
+  color: black;
+}
+
+.note-date .notes-icons i:nth-child(1) {
+  margin-right: 0.5rem;
+}
+
+.note-date .notes-icons i:nth-child(2) {
+  margin-right: 0.5rem;
+}
+
+.note.new {
+  background-color: bisque;
+}
+
+textarea {
+  border: none;
+  background-color: bisque;
+  font-size: 0.9rem;
+}
+
+.note.new input {
+  width: 100%;
+  border: none;
+  background-color: bisque;
+}
+
+.note.new input[type='text'] {
+  font-weight: bolder;
+  font-size: 0.9rem;
+}
+
+.note.new input:focus,
+textarea:focus {
+  outline: none;
+}
+
+.note-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.save {
+  background-color: rgb(192, 189, 189);
+  border: none;
+  border-radius: 15px;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  font-weight: bolder;
+}
+
+.save:hover {
+  background-color: rgb(245, 245, 245);
+  cursor: pointer;
+}
