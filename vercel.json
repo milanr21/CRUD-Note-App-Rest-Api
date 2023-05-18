@@ -1,8 +1,8 @@
 {
    "version": 2,
-   "name": "music-album",
+   "name": "crud",
    "builds": [
-      { "src": "app.js", "use": "@vercel/node" }
+      { "src": "app.jsx", "use": "@vercel/node" }
    ],
    "routes": [
       { "src": "/(.*)", "dest": "/app.js" }
