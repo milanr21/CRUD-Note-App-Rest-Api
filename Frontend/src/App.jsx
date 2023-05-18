@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import AddUpdate from './pages/AddUpdate';
 
 import UpdatePage from './components/updatePage';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (

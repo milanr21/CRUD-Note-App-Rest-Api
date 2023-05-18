@@ -3,60 +3,56 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const UpdatePage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [values, setValues] = useState({
-    id: id,
-    Title: '',
-    description: '',
-    DateCreated: moment().format('LLLL'),
-  });
+  const [notes, setNotes] = useState([]);
+
+  const singleNote = notes?.find((item) => item?.id === id);
+  console.log(singleNote);
 
   useEffect(() => {
     axios
-      .get('http://localhost:3000/notes/' + id)
+      .get('http://localhost:3000/note/' + id)
       .then((res) => {
-        setValues({
-          ...values,
-          Title: res.data.Title,
-          description: res.data.description,
-        });
+        setNotes(res.data);
       })
-      .catch((err) => console.log(err));
-  }, [id, values]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
-
-  const handleUpdate = () => {
-    axios
-      .put(`http://localhost:3000/notes/${id}`, values)
-      .then((res) => {
-        console.log('Data updated');
-        navigate('/');
-      })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(res));
+  }, []);
 
   return (
     <div>
       <div>
-        <div className='note new'>
+        <form
+          className='note new'
+          onSubmit={async (values) => {
+            event.preventDefault();
+
+            const form = new FormData(values.target);
+            const data = Object.fromEntries(form);
+            try {
+              const res = await axios.put(
+                `http://localhost:3000/note/${id}`,
+                data
+              );
+              toast.success(res?.data);
+              navigate('/');
+              console.log(res);
+            } catch (error) {
+              alert(error);
+            }
+          }}
+        >
           <h4>
             <input
               type='text'
               name='Title'
               placeholder='Type a note title.....'
-              values={values.Title}
-              onChange={handleInputChange}
+              values={singleNote?.Title}
+              defaultValue={singleNote?.Title}
             />
           </h4>
 
@@ -66,17 +62,18 @@ const UpdatePage = () => {
             cols='10'
             rows='6'
             placeholder='Type to add a new note......'
-            values={values.email}
-            onChange={handleInputChange}
+            values={singleNote?.description || ''}
+            defaultValue={singleNote?.description || ''}
           ></textarea>
           <div className='note-footer'>
-            <small>{id.DateCreated}</small>
+            <small>
+              <input type='text' values={moment().format('LLLL')} />
+            </small>
             <small>EDIT YOUR NOTE</small>
-            <button onClick={handleUpdate} className='save'>
-              Save
-            </button>
+
+            <button type='submit'>Save</button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
